@@ -1,6 +1,8 @@
+<div align="center">
+
 # 🐻⛓️ The Easiest Way To Run A Berachain Node 🐻⛓️
 
-<div align="center">
+
 
 ![alt text](./assets//hero.png)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
