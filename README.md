@@ -17,7 +17,7 @@ This is great if you expect to do high throughput RPC interactions or don't trus
 This project utilizes Git submodules to reference the client code, notably Go-Ethereum and BeaconKit.
 However, the scripts can be configured to reference binaries you build locally, making development quicker.
 
- **You will need Go 1.23 installed**.
+ **You will need Go 1.23 and JQ installed**.
 
  ```bash
 git clone --recursive https://github.com/rzmahmood/berachain-node-quickstart.git

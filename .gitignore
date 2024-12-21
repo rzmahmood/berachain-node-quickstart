@@ -1,2 +1,2 @@
 config
-beaconkit.log
+*.log
