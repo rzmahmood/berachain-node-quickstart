@@ -19,6 +19,10 @@ cleanup() {
 # Trap the SIGINT signal and call the cleanup function when it's caught
 trap 'cleanup' SIGINT
 
+# Kill any hanging geth or beaconkit instances to prevent port clashes
+pkill geth || echo "No existing geth processes"
+pkill beacond || echo "No existing beaconkit processes"
+
 # Detect if a node has already been started before. If the config directory already exists, it is assumed that we will
 # continue operations from a previously started node. Delete the 'config' directory to start from scratch
 echo "🐻⛓️ BM. You're off to a bearilliant start 🐻⛓️"
