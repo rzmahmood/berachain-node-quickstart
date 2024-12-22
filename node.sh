@@ -35,9 +35,12 @@ else
 fi
 
 
+BEACON_CONFIG_DIR=./config/beacond
+EL_CONFIG_DIR=./config/geth
+
 # Make the configuration directories
-mkdir -p config/beacond
-mkdir -p config/geth
+mkdir -p $BEACON_CONFIG_DIR
+mkdir -p $EL_CONFIG_DIR
 
 ############################## START: TWEAK THESE AS NECESSARY ###########################
 # The CL network to operate on. Default is bArtio. Should be updated alongside the EL_CHAIN_ID
@@ -52,10 +55,17 @@ GETH_BINARY=./dependencies/go-ethereum/build/bin/geth
 
 # Feel free to replace the name below with a node name of your choice. It has little impact. It will node be used
 MONIKER_NAME=BIG_BERA_DEFAULT_QUICKSTART_NODE_$(date +"%s")
-############################## END: TWEAK THESE AS NECESSARY ###########################
 
-BEACON_CONFIG_DIR=./config/beacond
-EL_CONFIG_DIR=./config/geth
+# If USE_SNAPSHOT is true, then a snapshot will be downloaded to bootstrap the state, allowing for faster sync time.
+# Introduces a trust assumption that the snapshot provider is trustworthy
+USE_SNAPSHOT=true
+SNAPSHOTS_DIRECTORY=./snapshots
+
+# Update to use a source closer to your geography. 
+# Sources can be found here https://storage.googleapis.com/bartio-snapshot-as/index.html
+CL_SNAPSHOT_SOURCE=https://storage.googleapis.com/bartio-snapshot-as/beacon/pruned/snapshot_beacond_pruned_20241216120039.tar
+EL_SNAPSHOT_SOURCE=https://storage.googleapis.com/bartio-snapshot-as/exec/geth/pruned/snapshot_geth_pruned_20241216120535.tar
+############################## END: TWEAK THESE AS NECESSARY ###########################
 
 # Rename the jwt path in app.toml
 JWT_PATH=$BEACON_CONFIG_DIR/jwt.hex;
@@ -94,6 +104,32 @@ if [ "$FRESH_START" = true ]; then
 	$GETH_BINARY init \
 	--datadir=$EL_CONFIG_DIR \
 	networks/$EL_CHAIN_ID/el-genesis.json
+
+
+	# Check if there's a local snapshot. If there is use that to avoid downloading again, even though it may be a bit behind
+	if [ "$USE_SNAPSHOT" = true ]; then
+		# Check if the SNAPSHOTS_DIRECTORY directory exists
+		if [ ! -d "$SNAPSHOTS_DIRECTORY" ]; then
+			echo "Directory $SNAPSHOTS_DIRECTORY does not exist. Creating it and downloading files..."
+
+			# Create the directory
+			mkdir -p "$SNAPSHOTS_DIRECTORY/beacond"
+			mkdir -p "$SNAPSHOTS_DIRECTORY/geth"
+
+			# Download CL Snapshot file
+			curl --parallel --parallel-max 10 -L $CL_SNAPSHOT_SOURCE > $SNAPSHOTS_DIRECTORY/CL_SNAPSHOT_FIILE.tar.lz4;
+			# Download EL Snapshot file
+			curl --parallel --parallel-max 10 -L $EL_SNAPSHOT_SOURCE > $SNAPSHOTS_DIRECTORY/EL_SNAPSHOT_FIILE.tar.lz4;
+
+			echo "Files downloaded successfully."
+		else
+			echo "Directory $directory already exists. Continuing processing as normal."
+		fi
+	fi
+
+	# Continue processing as normal
+	echo "Processing complete."
+
 fi
 
 $BEACOND_BINARY start \
@@ -118,6 +154,6 @@ echo "Sleeping for 10s"
 sleep 10
 
 while true; do
-	$BEACOND_BINARY --home=./config/beacond status | jq;
+	$BEACOND_BINARY --home=./config/beacond status | jq .sync_info;
 	sleep 10
 done
