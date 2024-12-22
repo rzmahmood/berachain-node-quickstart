@@ -111,7 +111,7 @@ $GETH_BINARY \
 	--authrpc.vhosts="*" \
 	--authrpc.addr=127.0.0.1 \
 	--authrpc.jwtsecret=$JWT_PATH \
-	--datadir=$BEACON_CONFIG_DIR \
+	--datadir=$EL_CONFIG_DIR \
 	--bootnodes=$el_bootnodes \
 	--identity=$MONIKER_NAME \
 	--verbosity=3 \
