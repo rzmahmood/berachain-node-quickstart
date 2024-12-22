@@ -86,8 +86,7 @@ prometheus-retention-time = 0
 #
 # Example:
 # [["chain_id", "cosmoshub-1"]]
-global-labels = [
-]
+global-labels = []
 
 # MetricsSink defines the type of metrics sink to use.
 metrics-sink = ""
@@ -136,7 +135,7 @@ style = "pretty"
 
 [beacon-kit.kzg]
 # Path to the trusted setup path.
-trusted-setup-path = "./testing/files/kzg-trusted-setup.json"
+trusted-setup-path = "./config/beacond/kzg-trusted-setup.json"
 
 # KZG implementation to use.
 # Options are "crate-crypto/go-kzg-4844" or "ethereum/c-kzg-4844".

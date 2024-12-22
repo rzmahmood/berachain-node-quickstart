@@ -97,8 +97,7 @@ if [ "$FRESH_START" = true ]; then
 fi
 
 $BEACOND_BINARY start \
-	--home=$BEACON_CONFIG_DIR \
-	--beacon-kit.kzg.trusted-setup-path=$BEACON_CONFIG_DIR/kzg-trusted-setup.json > "beaconkit.log" 2>&1 &
+	--home=$BEACON_CONFIG_DIR > "beaconkit.log" 2>&1 &
 
 
 el_bootnodes=$(cat networks/$EL_CHAIN_ID/el-bootnodes.txt | grep '^enode://' | tr '\n' ',' | sed 's/,$//');
