@@ -1,4 +1,4 @@
-name: Testnet Deployment CI
+name: Node CI
 
 on:
   push:
