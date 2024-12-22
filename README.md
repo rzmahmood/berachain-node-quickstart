@@ -32,4 +32,23 @@ A helper script that builds the submodules, saving the binaries in a known path
 ## Running
 Start the Node. Make sure you've already finished the installation. If a node was previously started, it will continue from there.
 
+Logs are stored in `beaconkit.log` and `geth.log`
+
+```bash
+./node.sh
+```
+
+By default, this will start a sync from genesis without bootstrapping from a snapshot. For long running networks, this can take a long time depending on your network latency and geography
+
+To run with a snapshot - note that will involve downloading large snapshot files from third party sites which will take several hours to download. It also introduces a trust assumption on the snapshot provider
+```bash
+USE_SNAPSHOT=true ./node.sh
+```
+
+## Coming Soon
+- State Sync (if possible)
+
+## FAQ / Common Issues
+- Downloading snapshot is too slow
+    - Try changing the CL_SNAPSHOT_SOURCE or EL_SNAPSHOT_SOURCE snapshot sources in `node.sh` to a source from https://github.com/berachain/beacon-kit/blob/main/testing/networks/80084/snapshots.md that is geographically closer
 

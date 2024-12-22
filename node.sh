@@ -57,8 +57,8 @@ GETH_BINARY=./dependencies/go-ethereum/build/bin/geth
 MONIKER_NAME=BIG_BERA_DEFAULT_QUICKSTART_NODE_$(date +"%s")
 
 # If USE_SNAPSHOT is true, then a snapshot will be downloaded to bootstrap the state, allowing for faster sync time.
-# Introduces a trust assumption that the snapshot provider is trustworthy
-USE_SNAPSHOT=false
+# Introduces a trust assumption that the snapshot provider is trustworthy. Defaults to false
+USE_SNAPSHOT=${USE_SNAPSHOT:-false}
 SNAPSHOTS_DIRECTORY=./snapshots
 
 # Update to use a source closer to your geography. 
