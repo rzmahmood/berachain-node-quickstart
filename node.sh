@@ -112,6 +112,7 @@ $GETH_BINARY \
 	--datadir=$EL_CONFIG_DIR \
 	--bootnodes=$el_bootnodes \
 	--identity=$MONIKER_NAME \
+	--syncmode=snap \
 	--verbosity=3 > "geth.log" 2>&1 &
 
 echo "Sleeping for 100s"
