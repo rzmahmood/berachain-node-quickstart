@@ -29,7 +29,7 @@ jobs:
     - name: Build dependencies
       run: ./build-dependencies.sh
       
-    - name: Start Testnet
+    - name: Start Node
       run: |
         ./node.sh &
         sleep 60
