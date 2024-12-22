@@ -154,6 +154,6 @@ echo "Sleeping for 10s"
 sleep 10
 
 while true; do
-	$BEACOND_BINARY --home=./config/beacond status | jq .sync_info;
+	$BEACOND_BINARY --home=$BEACON_CONFIG_DIR status | jq .sync_info;
 	sleep 10
 done
