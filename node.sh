@@ -69,10 +69,10 @@ if [ "$FRESH_START" = true ]; then
 
 
 	# Copy network files for the chosen network into working config directory
-	cp networks/$EL_CHAIN_ID/genesis.json $BEACON_CONFIG_DIR/genesis.json
+	cp networks/$EL_CHAIN_ID/genesis.json $BEACON_CONFIG_DIR/config/genesis.json
 	cp networks/$EL_CHAIN_ID/kzg-trusted-setup.json $BEACON_CONFIG_DIR/kzg-trusted-setup.json
-	cp networks/$EL_CHAIN_ID/app.toml $BEACON_CONFIG_DIR/app.toml
-	cp networks/$EL_CHAIN_ID/config.toml $BEACON_CONFIG_DIR/config.toml
+	cp networks/$EL_CHAIN_ID/app.toml $BEACON_CONFIG_DIR/config/app.toml
+	cp networks/$EL_CHAIN_ID/config.toml $BEACON_CONFIG_DIR/config/config.toml
 
 
 	# Rename the moniker in config.toml to the one configured in this script
@@ -106,16 +106,13 @@ el_bootnodes=$(cat networks/$EL_CHAIN_ID/el-bootnodes.txt | grep '^enode://' | t
 # Start geth execution client for this node
 $GETH_BINARY \
 	--networkid=$EL_CHAIN_ID \
-	--http \
-	--ws \
 	--authrpc.vhosts="*" \
 	--authrpc.addr=127.0.0.1 \
 	--authrpc.jwtsecret=$JWT_PATH \
 	--datadir=$EL_CONFIG_DIR \
 	--bootnodes=$el_bootnodes \
 	--identity=$MONIKER_NAME \
-	--verbosity=3 \
-	--syncmode=full > "geth.log" 2>&1 &
+	--verbosity=3 > "geth.log" 2>&1 &
 
 echo "Sleeping for 100s"
 sleep 100
