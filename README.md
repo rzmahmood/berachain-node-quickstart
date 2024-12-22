@@ -38,14 +38,10 @@ Logs are stored in `beaconkit.log` and `geth.log`
 ./node.sh
 ```
 
-By default, this will start a sync from genesis without bootstrapping from a snapshot. For long running networks, this can take a long time depending on your network latency and geography
-
-To run with a snapshot - note that will involve downloading large snapshot files from third party sites which will take several hours to download. It also introduces a trust assumption on the snapshot provider
-```bash
-USE_SNAPSHOT=true ./node.sh
-```
+By default, this will start a sync from genesis without bootstrapping from a snapshot. For long running networks, this can take a long time depending on your network latency and geography. Syncing from a snapshot support will come soon.
 
 ## Coming Soon
+- Syncing from a snapshot
 - State Sync (if possible)
 
 ## FAQ / Common Issues
