@@ -117,8 +117,8 @@ $GETH_BINARY \
 	--verbosity=3 \
 	--syncmode=full > "geth.log" 2>&1 &
 
-echo "Sleeping for 10s"
-sleep 10
+echo "Sleeping for 100s"
+sleep 100
 
 $BEACOND_BINARY --home=./config/beacond status | jq;
 
